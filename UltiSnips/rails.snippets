@@ -1,0 +1,17 @@
+snippet exp
+expect($1).to eq $2
+endsnippet
+
+snippet desc
+describe "$1" do
+	$2
+end
+endsnippet
+
+snippet resp
+if $1
+	render json: $2, status: 200
+else
+	render json: { errors: $2.errors }, status: 422
+end
+endsnippet

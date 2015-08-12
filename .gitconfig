@@ -1,0 +1,15 @@
+[user]
+	name = Swastik
+	email = swastik@aceteq.co
+[diff]
+[color]
+[alias]
+  st = status
+  aa = add --all
+  ci = commit --verbose
+  co = checkout
+  di = diff
+  dc = diff --cached
+  ff = merge --ff-only
+	cm = !git add -A && git commit
+	pt = push -u origin

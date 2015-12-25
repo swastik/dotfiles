@@ -2,72 +2,87 @@ set nocompatible
 
 filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " Essential plugins
-Plugin 'tpope/vim-fugitive'
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'rking/ag.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'tomtom/tlib_vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'valloric/youcompleteme'
-Plugin 'mattn/emmet-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+
+Plug 'scrooloose/syntastic'
+
+Plug 'SirVer/ultisnips'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-commentary'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'valloric/youcompleteme', { 'do': './install.sh' }
+Plug 'mattn/emmet-vim'
+
+Plug 'rking/ag.vim'
+
+" FZF for search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'elixir-lang/vim-elixir'
 
 " Rails
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-rake'
-Plugin 'kana/vim-textobj-user'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'ecomba/vim-ruby-refactoring'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'thoughtbot/vim-rspec'
+Plug 'ecomba/vim-ruby-refactoring'
 
 " Rust
-Plugin 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim'
 
 " Javascript
-Plugin 'pangloss/vim-javascript'
-Plugin 'othree/yajs.vim'
-Plugin 'slim-template/vim-slim'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'mxw/vim-jsx'
-Plugin 'heavenshell/vim-jsdoc'
+Plug 'marijnh/tern_for_vim'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/yajs.vim'
+
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'slim-template/vim-slim'
+Plug 'mxw/vim-jsx'
 
 " Utils and themes
-Plugin 'junegunn/vim-easy-align'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'chriskempson/base16-vim'
-Plugin 'reedes/vim-colors-pencil'
-Plugin 'junegunn/seoul256.vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'ChrisKempson/Vim-Tomorrow-Theme'
-Plugin 'terryma/vim-expand-region'
-Plugin 'w0ng/vim-hybrid'
+Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-after-object'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'terryma/vim-expand-region'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jgdavey/vim-turbux'
+Plug 'benmills/vimux'
 
-" All of your Plugins must be added before the following line
-call vundle#end()
-filetype plugin indent on
+Plug 'reedes/vim-colors-pencil'
+Plug 'junegunn/seoul256.vim'
+Plug 'ChrisKempson/Vim-Tomorrow-Theme'
+Plug 'w0ng/vim-hybrid'
+Plug 'gilgigilgil/anderson.vim'
+Plug 'nanotech/jellybeans.vim'
+
+call plug#end()
 
 let base16colorspace=256
 let mapleader=","
 set t_Co=256
-set background=light
-colorscheme pencil
+colorscheme jellybeans
 set guifont=Inconsolata\ for\ Powerline:h13
-set linespace=4
-" let g:seoul256_background = 237
-" let g:airline_theme = 'pencil'
+set linespace=2
+let g:seoul256_background = 232
+
+"FZF
+set rtp+=~/.fzf
+noremap <c-p> :FZF<CR>
+
+nnoremap <silent> <Leader>s :call fzf#run({ 'tmux_height': winheight('.') / 2, 'sink': 'botright split' })<CR>
+nnoremap <silent> <Leader>v :call fzf#run({ 'tmux_width': winwidth('.') / 2, 'sink': 'vertical botright split' })<CR>
+
+nnoremap <silent> <Leader>c        :Colors<CR>
+nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 
 " set cursorline
 set expandtab
@@ -90,7 +105,8 @@ set ignorecase
 set smartcase
 " set relativenumber
 " set colorcolumn=80
-set listchars=tab:›\ ,eol:¬,trail:⋅ " Better chars
+set list
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_,
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 
@@ -107,9 +123,6 @@ au BufRead,BufNewFile *.go set filetype=go
 
 " No show command
 autocmd VimEnter * set nosc
-
-" Quick ESC
-imap jj <ESC>
 
 " Stop the arrow keys from working
 noremap <Up> <NOP>
@@ -141,21 +154,6 @@ if bufwinnr(1)
   nmap ä <C-W>+<C-W>+
 endif
 
-" NERDTree
-nmap <leader>n :NERDTreeToggle<CR>
-let NERDTreeHighlightCursorline=1
-let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg', 'build']
-let NERDTreeWinSize=26
-
-" CtrlP
-nnoremap <silent> t :CtrlP<cr>
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_by_filename = 0
-let g:ctrlp_max_files = 0
-let g:ctrlp_max_depth = 8
-if exists("g:ctrl_user_command")
-  unlet g:ctrlp_user_command
-endif
 set wildignore+=*/vendor/**
 set wildignore+=*/tmp/**
 set wildignore+=*/node_modules/**
@@ -172,10 +170,6 @@ command! E e
 command! Q q
 command! Wq wq
 command! WQ wq
-
-let g:airline_powerline_fonts = 1
-" let g:airline_left_sep = ''
-" let g:airline_right_sep = ''
 
 " Mapping for renaming files
 function! RenameFile()
@@ -203,25 +197,14 @@ let g:UltiSnipsExpandTrigger="<c-e>"
 " Syntastic highlights everything in the world otherwise
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
-" Set stuff to XTERM
-" set term=xterm-256color
 set termencoding=utf-8
-" set fillchars+=stl:\ ,stlnc:\
+set fillchars+=stl:\ ,stlnc:\
 
 " Run a macro with space
 :nnoremap <Space> @q
 
-" although I don't use NERDTree much, this is still useful sometimes
-map <Leader>nt :NERDTree<CR>
-
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
 " EasyAlign
 vmap <Enter> <Plug>(EasyAlign)
-nmap <Leader>a <Plug>(EasyAlign)
 
 map <Leader>> :30winc><CR>
 map <Leader>< :30winc<<CR>
@@ -231,7 +214,25 @@ let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 " setup turbux
-let g:turbux_command_rspec  = 'bin/rspec'
+let g:turbux_command_rspec = 'bin/rspec'
 
 " Shortcut to remove highlights
 noremap <silent><leader>/ :nohlsearch<cr>
+
+" Defines some after object mappings
+autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
+
+" For fzf
+nmap <silent> <leader>m :History<CR>
+
+" rspec
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+" send to pane
+let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
+
+let g:VimuxOrientation = "h"
+let g:VimuxHeight = "40"

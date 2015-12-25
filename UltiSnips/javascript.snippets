@@ -19,7 +19,7 @@ _.map($1, ($2) => {
 endsnippet
 
 snippet cl
-console.log($1);
+console.log($1)
 endsnippet
 
 snippet cdm
@@ -28,10 +28,24 @@ componentDidMount () {
 },
 endsnippet
 
+snippet r
+render () {
+	return (
+		$1
+	)
+}
+endsnippet
+
 snippet gis
 getInitialState () {
 	return $1
 },
+endsnippet
+
+snippet ss
+this.setState({
+	$1
+})
 endsnippet
 
 snippet rcrt
@@ -64,7 +78,22 @@ const {
 	get: get,
 	set: set,
 	computed,
+	inject
 	on
 } = Em
 
+endsnippet
+
+snippet ns
+Notify.success($1)
+endsnippet
+
+snippet ne
+Notify.error($1)
+endsnippet
+
+snippet run
+run(() => {
+	${VISUAL}
+})
 endsnippet

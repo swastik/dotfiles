@@ -237,3 +237,7 @@ let g:rspec_command = 'call VimuxRunCommand("rspec {spec}\n")'
 
 let g:VimuxOrientation = "h"
 let g:VimuxHeight = "40"
+
+let g:lightline = {
+      \ 'colorscheme': 'Tomorrow',
+      \ }

@@ -8,7 +8,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
-
 Plug 'scrooloose/syntastic'
 
 Plug 'SirVer/ultisnips'
@@ -18,14 +17,15 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'valloric/youcompleteme', { 'do': './install.sh' }
 Plug 'mattn/emmet-vim'
 
+" Search
 Plug 'rking/ag.vim'
 
 " FZF for search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 
-
-" Rails
+" Ruby & Rails
+Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'kana/vim-textobj-user'
@@ -58,8 +58,11 @@ Plug 'terryma/vim-expand-region'
 Plug 'altercation/vim-colors-solarized'
 Plug 'jgdavey/vim-turbux'
 Plug 'benmills/vimux'
+Plug 'alexlafroscia/vim-ember-cli'
 
 Plug 'junegunn/seoul256.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'roman/golden-ratio'
 
 call plug#end()
 

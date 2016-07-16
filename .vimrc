@@ -24,7 +24,6 @@ Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'elixir-lang/vim-elixir'
 
 " Rails
 Plug 'tpope/vim-rails'
@@ -37,6 +36,9 @@ Plug 'ecomba/vim-ruby-refactoring'
 " Rust
 Plug 'rust-lang/rust.vim'
 
+" Elixir
+Plug 'elixir-lang/vim-elixir'
+
 " Javascript
 Plug 'marijnh/tern_for_vim'
 Plug 'pangloss/vim-javascript'
@@ -48,7 +50,7 @@ Plug 'mxw/vim-jsx'
 
 " Utils and themes
 Plug 'junegunn/vim-easy-align'
-" Plug 'junegunn/limelight.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-after-object'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'christoomey/vim-tmux-navigator'
@@ -57,19 +59,15 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'jgdavey/vim-turbux'
 Plug 'benmills/vimux'
 
-Plug 'reedes/vim-colors-pencil'
 Plug 'junegunn/seoul256.vim'
-Plug 'ChrisKempson/Vim-Tomorrow-Theme'
-Plug 'w0ng/vim-hybrid'
-Plug 'gilgigilgil/anderson.vim'
-Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
 let base16colorspace=256
 let mapleader=","
 set t_Co=256
-colorscheme jellybeans
+let g:seoul256_background = 255
+colorscheme seoul256-light
 set guifont=Inconsolata\ for\ Powerline:h13
 set linespace=2
 let g:seoul256_background = 232
@@ -106,7 +104,7 @@ set smartcase
 " set relativenumber
 " set colorcolumn=80
 set list
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_,
+set lcs=tab:▸\ ,trail:·,nbsp:_,
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 

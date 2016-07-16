@@ -55,11 +55,7 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='mvim'
-fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -76,7 +72,9 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ctags="`brew --prefix`/bin/ctags"
-alias em=ember
+alias em="ember"
+alias rn="react-native"
+alias vim="/usr/local/bin/vim"
 
 # Required to load RVM all the time
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -87,3 +85,6 @@ bindkey "^[[B" history-beginning-search-forward
 
 export NVM_DIR="/Users/swastik/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+autoload -U promptinit && promptinit
+prompt pure

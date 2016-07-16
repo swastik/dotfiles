@@ -11,5 +11,6 @@
   di = diff
   dc = diff --cached
   ff = merge --ff-only
-	cm = !git add -A && git commit
 	pt = push -u origin
+[push]
+	default = simple

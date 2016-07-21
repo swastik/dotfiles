@@ -217,9 +217,6 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 " setup turbux
 let g:turbux_command_rspec = 'bin/rspec'
 
-" Shortcut to remove highlights
-noremap <silent><leader>/ :nohlsearch<cr>
-
 " Defines some after object mappings
 autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
 

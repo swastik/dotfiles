@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="cypher"
+# ZSH_THEME="pure"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -56,6 +56,7 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 # export LANG=en_US.UTF-8
 
 export EDITOR='vim'
+export FZF_DEFAULT_COMMAND='ag -g ""'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -88,3 +89,6 @@ export NVM_DIR="/Users/swastik/.nvm"
 
 autoload -U promptinit && promptinit
 prompt pure
+
+source ~/dotfiles/zsh/functions
+autoload -U gh && ge

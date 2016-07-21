@@ -91,4 +91,3 @@ autoload -U promptinit && promptinit
 prompt pure
 
 source ~/dotfiles/zsh/functions
-autoload -U gh && ge

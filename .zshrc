@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="pure"
+# ZSH_THEME="random"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,8 +49,12 @@ plugins=(git rails zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
+# Android
+export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1_1/
+
 # User configuration
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -74,8 +78,14 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ctags="`brew --prefix`/bin/ctags"
 alias em="ember"
+alias rpdbm="RAILS_ENV=test rake db:migrate"
+alias rpt="RAILS_ENV=test rake parallel:spec"
 alias rn="react-native"
 alias vim="/usr/local/bin/vim"
+alias v='vim'
+alias emt="ember test --server"
+alias em-prepare-update="npm uninstall -g ember-cli && npm cache clean && bower cache clean"
+alias em-update="npm install && bower install && ember init"
 
 # Required to load RVM all the time
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -91,3 +101,9 @@ autoload -U promptinit && promptinit
 prompt pure
 
 source ~/dotfiles/zsh/functions
+export DISABLE_AUTO_TITLE=true
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

@@ -6,16 +6,17 @@ call plug#begin('~/.vim/plugged')
 
 " Essential plugins
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-oblique'
+Plug 'junegunn/vim-slash'
+
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
 
 Plug 'SirVer/ultisnips'
 Plug 'tomtom/tlib_vim'
-Plug 'tpope/vim-commentary'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mattn/emmet-vim'
 
@@ -29,65 +30,62 @@ Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 
+"FZF
+set rtp+=~/.fzf
+noremap <c-p> :FZF<CR>
+nmap <silent> <leader>m :History<CR>
+
 " Ruby & Rails
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'thoughtbot/vim-rspec'
 Plug 'ecomba/vim-ruby-refactoring'
 
 " Javascript
 Plug 'marijnh/tern_for_vim'
 Plug 'pangloss/vim-javascript'
-
-" Lightline
-Plug 'itchyny/lightline.vim'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'flowtype/vim-flow'
 
 " Highlighting
 Plug 'othree/yajs.vim'
 Plug 'othree/html5.vim'
-Plug 'othree/es.next.syntax.vim'
 Plug 'mxw/vim-jsx'
-
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'slim-template/vim-slim'
+Plug 'mustache/vim-mustache-handlebars'
 
-" Utils and themes
+" Utils
 Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'jgdavey/vim-turbux'
+Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
-
 Plug 'roman/golden-ratio'
-Plug 'AndrewRadev/ember_tools.vim', { 'for': ['handlebars', 'javascript'] }
+
+" Themes
+Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'rakr/vim-one'
+Plug 'dracula/vim'
 
 " Autocomplete
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'othree/jspc.vim'
 
 call plug#end()
 
 let mapleader=","
 set background=dark
-set guifont=Fira\ Code:h15
-set linespace=2
+set guifont=Consolas:h15
+set linespace=1
 
 colorscheme hybrid
 
-"FZF
-set rtp+=~/.fzf
-noremap <c-p> :FZF<CR>
-
-nnoremap <silent> <Leader>s :call fzf#run({ 'tmux_height': winheight('.') / 2, 'sink': 'botright split' })<CR>
-nnoremap <silent> <Leader>v :call fzf#run({ 'tmux_width': winwidth('.') / 2, 'sink': 'vertical botright split' })<CR>
-
-nnoremap <silent> <Leader>c        :Colors<CR>
-nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
 set expandtab
 set modelines=0
@@ -110,6 +108,9 @@ set list
 set lcs=tab:▸\ ,trail:·,nbsp:_,
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
+" set noesckeys
+set ttimeout
+set ttimeoutlen=1
 
 " Automatic formatting
 autocmd BufWritePre *.rb :%s/\s\+$//e
@@ -136,10 +137,10 @@ noremap h <NOP>
 noremap l <NOP>
 
 " Open new buffers
-nmap <leader>s<left>   :leftabove  vnew<cr>
-nmap <leader>s<right>  :rightbelow vnew<cr>
-nmap <leader>s<up>     :leftabove  new<cr>
-nmap <leader>s<down>   :rightbelow new<cr>
+nmap <leader>s<left> :leftabove vnew<cr>
+nmap <leader>s<right> :rightbelow vnew<cr>
+nmap <leader>s<up> :leftabove new<cr>
+nmap <leader>s<down> :rightbelow new<cr>
 
 " Tab between buffers
 noremap <tab> <c-w><c-w>
@@ -165,7 +166,7 @@ set wildignore+=*/log/**
 " Quit with :Q
 command! -nargs=0 Quit :qa!
 
-" Make this mistake all the frickin' time
+" Make this mistake all the time
 command! W w
 command! E e
 command! Q q
@@ -184,7 +185,7 @@ function! RenameFile()
 endfunction
 map <leader>n :call RenameFile()<cr>
 
-" Code folding /yep
+" Code folding
 set foldmethod=indent   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
@@ -204,33 +205,13 @@ set fillchars+=stl:\ ,stlnc:\
 " EasyAlign
 vmap <Enter> <Plug>(EasyAlign)
 
-map <Leader>> :30winc><CR>
-map <Leader>< :30winc<<CR>
-
 " cursor
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
-" setup turbux
-let g:turbux_command_rspec = 'bin/rspec'
-
-" For fzf
-nmap <silent> <leader>m :History<CR>
-
-" rspec
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
-
-" send to pane
-let g:rspec_command = 'call VimuxRunCommand("bin/rspec {spec}\n")'
-
+" Vimux runs tests in tmux windows
 let g:VimuxOrientation = "h"
 let g:VimuxHeight = "40"
-
-let g:jsx_ext_required = 0
-let g:jsdoc_allow_input_prompt = 1
 
 """"""""""""""""""""""""""""
 """"""""NEOCOMPLETE"""""""""
@@ -240,7 +221,7 @@ let g:jsdoc_allow_input_prompt = 1
 let g:neocomplete#enable_at_startup = 1
 
 " Tab to complete
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Close popup
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
@@ -260,10 +241,114 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Linting
 let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'saas': ['saas-lint']
+\ 'javascript': ['eslint'],
+\ 'handlebars': ['ember-template-lint']
 \}
 
 " Echodoc
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
+
+" Enable flow
+let g:flow#enable = 1
+let g:flow#autoclose = 1
+let g:flow#errjump = 1
+
+" Enable syntax highlighting for JSDoc
+let g:javascript_plugin_jsdoc = 1
+
+" Test mappings
+let test#strategy = "vimux"
+
+" Ensure vim-test uses the right command
+let test#javascript#jest#executable = 'npm test'
+
+" Conceal some characters in JS
+set conceallevel=1
+" let g:javascript_conceal_function = "ƒ"
+
+nmap <silent> <leader>s :TestNearest<CR>
+nmap <silent> <leader>t :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+" Emmet won't recognize JSX. This will fix it.
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
+
+" ----------------------------------------------------------------------------
+" vim-fugitive
+" ----------------------------------------------------------------------------
+nmap     <Leader>g :Gstatus<CR>gg<c-n>
+nnoremap <Leader>d :Gdiff<CR>
+nnoremap <Leader>c :Gcommit<CR>
+
+"-----------------------------------------------------------------------------
+" Prettier
+"-----------------------------------------------------------------------------
+nnoremap <Leader>pp :silent %!prettier --stdin --no-semi --trailing-comma all --single-quote<CR>
+
+"------------------------------------------------------------------------------
+" Statusline
+"
+" We define a minimal, custom statusline here. Inspired largely by eleline.
+" -----------------------------------------------------------------------------
+
+" There are four highlight blocks that we will use later on
+hi User1 ctermfg=6 ctermbg=234
+hi User2 ctermfg=14 ctermbg=234
+hi User3 ctermfg=11 ctermbg=234
+hi User4 ctermfg=10 ctermbg=234
+
+" Start from scratch
+set statusline =
+
+" File and a separator
+set statusline +=%1*λ\ %f
+
+" Git branch
+function! S_fugitive()
+  if exists('g:loaded_fugitive')
+    let l:head = fugitive#head()
+    return empty(l:head) ? '' : ' '.l:head . ' '
+  endif
+
+  return ''
+endfunction
+
+set statusline +=%3*%=%{S_fugitive()}
+
+" ALE's status
+set statusline +=\·\ 
+set statusline+=%4*%{ale#statusline#Status()}
+set statusline +=\ ·\ 
+
+" Line, column and percentage
+set statusline +=\%l/%L
+
+"----------------------------------------------------------------------------------
+" ALE
+"
+" Customizes how ALE shows up
+"----------------------------------------------------------------------------------
+
+let g:ale_sign_error = '×'
+let g:ale_sign_warning = '~'
+
+highlight ALEErrorSign ctermfg=1 ctermbg=234
+highlight ALEWarningSign ctermfg=11 ctermbg=234
+
+" Disable it on hbs files
+let g:ale_pattern_options = {
+\   '.*\.hbs$': {'ale_enabled': 0},
+\}
+
+"-----------------------------------------------------------------------------------
+" Mustache for ember
+" -----------------------------------------------------------------------------------
+
+let g:mustache_abbreviations = 1

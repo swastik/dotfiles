@@ -48,6 +48,7 @@ Plug 'marijnh/tern_for_vim'
 Plug 'pangloss/vim-javascript'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'flowtype/vim-flow'
+Plug 'leafgarland/typescript-vim'
 
 " Highlighting
 Plug 'othree/yajs.vim'
@@ -67,8 +68,6 @@ Plug 'roman/golden-ratio'
 " Themes
 Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'rakr/vim-one'
-Plug 'dracula/vim'
 
 " Autocomplete
 Plug 'Shougo/neocomplete.vim'
@@ -346,9 +345,3 @@ highlight ALEWarningSign ctermfg=11 ctermbg=234
 let g:ale_pattern_options = {
 \   '.*\.hbs$': {'ale_enabled': 0},
 \}
-
-"-----------------------------------------------------------------------------------
-" Mustache for ember
-" -----------------------------------------------------------------------------------
-
-let g:mustache_abbreviations = 1

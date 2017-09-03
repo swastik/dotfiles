@@ -91,7 +91,7 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 set background=dark
-set guifont=Operator\ Mono:h15
+set guifont=Consolas:h15
 set linespace=1
 
 colorscheme seoul256

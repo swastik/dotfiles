@@ -1,17 +1,21 @@
 set nocompatible
 
-filetype off
+filetype on
+filetype indent on
+filetype plugin on
 
 call plug#begin('~/.vim/plugged')
 
 " Essential plugins
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-slash'
+Plug 'jiangmiao/auto-pairs'
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 
@@ -42,6 +46,7 @@ Plug 'tpope/vim-rake'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'ecomba/vim-ruby-refactoring'
+Plug 'wellbredgrapefruit/tomdoc.vim'
 
 " Javascript
 Plug 'marijnh/tern_for_vim'
@@ -64,25 +69,32 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
 Plug 'roman/golden-ratio'
+Plug 'AndrewRadev/ember_tools.vim'
 
 " Themes
 Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'rakr/vim-two-firewatch'
 
 " Autocomplete
-Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'ajh17/VimCompletesMe'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'othree/jspc.vim'
 
 call plug#end()
 
 let mapleader=","
+
+" Ensures the colorscheme works
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 set background=dark
-set guifont=Consolas:h15
+set guifont=Operator\ Mono:h15
 set linespace=1
 
-colorscheme hybrid
+colorscheme seoul256
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -110,6 +122,7 @@ set backupdir=~/.vim/backup//
 " set noesckeys
 set ttimeout
 set ttimeoutlen=1
+set cursorline
 
 " Automatic formatting
 autocmd BufWritePre *.rb :%s/\s\+$//e
@@ -212,26 +225,6 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 let g:VimuxOrientation = "h"
 let g:VimuxHeight = "40"
 
-""""""""""""""""""""""""""""
-""""""""NEOCOMPLETE"""""""""
-""""""""""""""""""""""""""""
-
-" Start neocomplete
-let g:neocomplete#enable_at_startup = 1
-
-" Tab to complete
-" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" Close popup
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-" Autocomplete-like
-let g:neocomplete#enable_auto_select = 1
-
-" Disable preview window
-set completeopt-=preview
-
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
@@ -241,12 +234,9 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " Linting
 let g:ale_linters = {
 \ 'javascript': ['eslint'],
-\ 'handlebars': ['ember-template-lint']
+\ 'handlebars': ['ember-template-lint'],
+\ 'ruby': ['rubocop'],
 \}
-
-" Echodoc
-set cmdheight=2
-let g:echodoc_enable_at_startup = 1
 
 " Enable flow
 let g:flow#enable = 1
@@ -303,6 +293,8 @@ hi User2 ctermfg=14 ctermbg=234
 hi User3 ctermfg=11 ctermbg=234
 hi User4 ctermfg=10 ctermbg=234
 
+hi StatusLineNC ctermfg=2 ctermbg=234 cterm=NONE
+
 " Start from scratch
 set statusline =
 
@@ -345,3 +337,27 @@ highlight ALEWarningSign ctermfg=11 ctermbg=234
 let g:ale_pattern_options = {
 \   '.*\.hbs$': {'ale_enabled': 0},
 \}
+
+" Enables auto-adding end to ruby
+if !exists( "*RubyEndToken" )
+
+  function RubyEndToken()
+    let current_line = getline( '.' )
+    let braces_at_end = '{\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
+    let stuff_without_do = '^\s*\(class\|if\|unless\|begin\|case\|for\|module\|while\|until\|def\)'
+      let with_do = 'do\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
+
+      if match(current_line, braces_at_end) >= 0
+        return "\<CR>}\<C-O>O"
+      elseif match(current_line, stuff_without_do) >= 0
+        return "\<CR>end\<C-O>O"
+      elseif match(current_line, with_do) >= 0
+        return "\<CR>end\<C-O>O"
+      else
+        return "\<CR>"
+      endif
+    endfunction
+
+endif
+
+imap <buffer> <CR> <C-R>=RubyEndToken()<CR>

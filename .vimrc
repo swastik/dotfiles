@@ -1,5 +1,6 @@
 set nocompatible
 
+syntax enable
 filetype on
 filetype indent on
 filetype plugin on
@@ -9,7 +10,7 @@ call plug#begin('~/.vim/plugged')
 " Essential plugins
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-slash'
-Plug 'jiangmiao/auto-pairs'
+Plug 'swastik/auto-pairs'
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
@@ -47,6 +48,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'ecomba/vim-ruby-refactoring'
 Plug 'wellbredgrapefruit/tomdoc.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 
 " Javascript
 Plug 'marijnh/tern_for_vim'
@@ -74,10 +76,14 @@ Plug 'AndrewRadev/ember_tools.vim'
 " Themes
 Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'rakr/vim-two-firewatch'
+Plug 'romainl/apprentice'
+Plug 'itchyny/lightline.vim'
 
 " Autocomplete
-Plug 'ajh17/VimCompletesMe'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'roxma/ncm-rct-complete'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'othree/jspc.vim'
 
@@ -86,15 +92,19 @@ call plug#end()
 let mapleader=","
 
 " Ensures the colorscheme works
+set t_Co=256
 set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 set background=dark
-set guifont=Consolas:h15
-set linespace=1
+set guifont=Inconsolata-dz\ for\ Powerline:h15
+set linespace=5
 
+let g:seoul256_background=236
 colorscheme seoul256
+
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -116,13 +126,19 @@ set incsearch
 set ignorecase
 set smartcase
 set list
-set lcs=tab:▸\ ,trail:·,nbsp:_,
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:·,nbsp:_,
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 " set noesckeys
 set ttimeout
 set ttimeoutlen=1
 set cursorline
+set relativenumber
+set lazyredraw
+
+
+" Save when losing focus
+au FocusLost * :silent! wall
 
 " Automatic formatting
 autocmd BufWritePre *.rb :%s/\s\+$//e
@@ -174,6 +190,9 @@ set wildignore+=*/node_modules/**
 set wildignore+=*/bower_components/**
 set wildignore+=*/build/**
 set wildignore+=*/log/**
+
+" Mapping for Ag
+nmap <leader>g :Ag<cr>
 
 " Quit with :Q
 command! -nargs=0 Quit :qa!
@@ -252,10 +271,6 @@ let test#strategy = "vimux"
 " Ensure vim-test uses the right command
 let test#javascript#jest#executable = 'npm test'
 
-" Conceal some characters in JS
-set conceallevel=1
-" let g:javascript_conceal_function = "ƒ"
-
 nmap <silent> <leader>s :TestNearest<CR>
 nmap <silent> <leader>t :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
@@ -281,46 +296,6 @@ nnoremap <Leader>c :Gcommit<CR>
 "-----------------------------------------------------------------------------
 nnoremap <Leader>pp :silent %!prettier --stdin --no-semi --trailing-comma all --single-quote<CR>
 
-"------------------------------------------------------------------------------
-" Statusline
-"
-" We define a minimal, custom statusline here. Inspired largely by eleline.
-" -----------------------------------------------------------------------------
-
-" There are four highlight blocks that we will use later on
-hi User1 ctermfg=6 ctermbg=234
-hi User2 ctermfg=14 ctermbg=234
-hi User3 ctermfg=11 ctermbg=234
-hi User4 ctermfg=10 ctermbg=234
-
-hi StatusLineNC ctermfg=2 ctermbg=234 cterm=NONE
-
-" Start from scratch
-set statusline =
-
-" File and a separator
-set statusline +=%1*λ\ %f
-
-" Git branch
-function! S_fugitive()
-  if exists('g:loaded_fugitive')
-    let l:head = fugitive#head()
-    return empty(l:head) ? '' : ' '.l:head . ' '
-  endif
-
-  return ''
-endfunction
-
-set statusline +=%3*%=%{S_fugitive()}
-
-" ALE's status
-set statusline +=\·\ 
-set statusline+=%4*%{ale#statusline#Status()}
-set statusline +=\ ·\ 
-
-" Line, column and percentage
-set statusline +=\%l/%L
-
 "----------------------------------------------------------------------------------
 " ALE
 "
@@ -340,7 +315,6 @@ let g:ale_pattern_options = {
 
 " Enables auto-adding end to ruby
 if !exists( "*RubyEndToken" )
-
   function RubyEndToken()
     let current_line = getline( '.' )
     let braces_at_end = '{\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
@@ -361,3 +335,6 @@ if !exists( "*RubyEndToken" )
 endif
 
 imap <buffer> <CR> <C-R>=RubyEndToken()<CR>
+
+" Splitjoin's mappings
+nmap <Leader>ss :SplitjoinSplit<cr>

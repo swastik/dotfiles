@@ -75,8 +75,7 @@ Plug 'AndrewRadev/ember_tools.vim'
 
 " Themes
 Plug 'junegunn/seoul256.vim'
-Plug 'w0ng/vim-hybrid'
-Plug 'romainl/apprentice'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'itchyny/lightline.vim'
 
 " Autocomplete
@@ -95,15 +94,14 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=dark
+set background=light
 set guifont=Inconsolata-dz\ for\ Powerline:h15
 set linespace=5
 
-let g:seoul256_background=236
-colorscheme seoul256
+colorscheme PaperColor
 
 let g:lightline = {
-      \ 'colorscheme': 'seoul256',
+      \ 'colorscheme': 'PaperColor',
       \ }
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
@@ -129,13 +127,11 @@ set list
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:·,nbsp:_,
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
-" set noesckeys
 set ttimeout
 set ttimeoutlen=1
 set cursorline
 set relativenumber
 set lazyredraw
-
 
 " Save when losing focus
 au FocusLost * :silent! wall

@@ -10,8 +10,6 @@ call plug#begin('~/.vim/plugged')
 " Essential plugins
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-slash'
-Plug 'swastik/auto-pairs'
-
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
@@ -19,11 +17,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
-
 Plug 'SirVer/ultisnips'
 Plug 'tomtom/tlib_vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mattn/emmet-vim'
+Plug 'janko-m/vim-test'
+Plug 'roman/golden-ratio'
 
 " Linting
 Plug 'w0rp/ale'
@@ -41,49 +40,45 @@ noremap <c-p> :FZF<CR>
 nmap <silent> <leader>m :History<CR>
 
 " Ruby & Rails
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'ecomba/vim-ruby-refactoring'
-Plug 'wellbredgrapefruit/tomdoc.vim'
-Plug 'AndrewRadev/splitjoin.vim'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
 
 " Javascript
-Plug 'marijnh/tern_for_vim'
-Plug 'pangloss/vim-javascript'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'flowtype/vim-flow'
-Plug 'leafgarland/typescript-vim'
+Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
+Plug 'AndrewRadev/ember_tools.vim'
 
 " Highlighting
-Plug 'othree/yajs.vim'
 Plug 'othree/html5.vim'
-Plug 'mxw/vim-jsx'
-Plug 'slim-template/vim-slim'
-Plug 'mustache/vim-mustache-handlebars'
+Plug 'othree/yajs.vim'
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'slim-template/vim-slim', { 'for': 'slim' }
+Plug 'mustache/vim-mustache-handlebars', { 'for': 'hbs' }
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'fatih/vim-go', { 'for': 'go' }
 
 " Utils
 Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
-Plug 'roman/golden-ratio'
-Plug 'AndrewRadev/ember_tools.vim'
+
+" Writing
+Plug 'junegunn/goyo.vim'
 
 " Themes
+Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/seoul256.vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'itchyny/lightline.vim'
+Plug 'morhetz/gruvbox'
 
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'calebeby/ncm-css'
+Plug 'fgrsnau/ncm-otherbuf'
 Plug 'roxma/ncm-rct-complete'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'othree/jspc.vim'
 
 call plug#end()
@@ -94,15 +89,11 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=light
-set guifont=Inconsolata-dz\ for\ Powerline:h15
-set linespace=5
+set background=dark
+set guifont=Inconsolata-dz\ for\ Powerline:h13
+set linespace=1
 
-colorscheme PaperColor
-
-let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
-      \ }
+colorscheme gruvbox
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -130,7 +121,7 @@ set backupdir=~/.vim/backup//
 set ttimeout
 set ttimeoutlen=1
 set cursorline
-set relativenumber
+" set relativenumber
 set lazyredraw
 
 " Save when losing focus
@@ -165,6 +156,9 @@ nmap <leader>s<left> :leftabove vnew<cr>
 nmap <leader>s<right> :rightbelow vnew<cr>
 nmap <leader>s<up> :leftabove new<cr>
 nmap <leader>s<down> :rightbelow new<cr>
+
+" Close everything but this
+map <leader>o :on<cr>
 
 " Tab between buffers
 noremap <tab> <c-w><c-w>
@@ -248,15 +242,15 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Linting
 let g:ale_linters = {
-\ 'javascript': ['eslint'],
+\ 'javascript': ['jshint', 'jscs'],
 \ 'handlebars': ['ember-template-lint'],
 \ 'ruby': ['rubocop'],
 \}
 
 " Enable flow
-let g:flow#enable = 1
-let g:flow#autoclose = 1
-let g:flow#errjump = 1
+" let g:flow#enable = 1
+" let g:flow#autoclose = 1
+" let g:flow#errjump = 1
 
 " Enable syntax highlighting for JSDoc
 let g:javascript_plugin_jsdoc = 1
@@ -309,28 +303,34 @@ let g:ale_pattern_options = {
 \   '.*\.hbs$': {'ale_enabled': 0},
 \}
 
-" Enables auto-adding end to ruby
-if !exists( "*RubyEndToken" )
-  function RubyEndToken()
-    let current_line = getline( '.' )
-    let braces_at_end = '{\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
-    let stuff_without_do = '^\s*\(class\|if\|unless\|begin\|case\|for\|module\|while\|until\|def\)'
-      let with_do = 'do\s*\(|\(,\|\s\|\w\)*|\s*\)\?$'
-
-      if match(current_line, braces_at_end) >= 0
-        return "\<CR>}\<C-O>O"
-      elseif match(current_line, stuff_without_do) >= 0
-        return "\<CR>end\<C-O>O"
-      elseif match(current_line, with_do) >= 0
-        return "\<CR>end\<C-O>O"
-      else
-        return "\<CR>"
-      endif
-    endfunction
-
-endif
-
-imap <buffer> <CR> <C-R>=RubyEndToken()<CR>
-
 " Splitjoin's mappings
 nmap <Leader>ss :SplitjoinSplit<cr>
+
+" ALE Errors
+function! LinterStatus() abort
+   let l:counts = ale#statusline#Count(bufnr(''))
+   let l:all_errors = l:counts.error + l:counts.style_error
+   let l:all_non_errors = l:counts.total - l:all_errors
+   return l:counts.total == 0 ? '' : printf(
+   \ 'W:%d E:%d',
+   \ l:all_non_errors,
+   \ l:all_errors
+   \)
+endfunction
+
+set laststatus=2
+set statusline=
+set statusline+=\ %l
+set statusline+=\ %*
+set statusline+=\ ‹‹
+set statusline+=\ %f\ %*
+set statusline+=\ ››
+set statusline+=\ %m
+set statusline+=\ %F
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
+set statusline+=\ ‹‹
+set statusline+=\ %{strftime('%R',\ getftime(expand('%')))}
+set statusline+=\ ::
+set statusline+=\ %n
+set statusline+=\ ››\ %*

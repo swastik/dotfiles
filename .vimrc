@@ -69,9 +69,8 @@ Plug 'junegunn/goyo.vim'
 " Themes
 Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/seoul256.vim'
-Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'lifepillar/vim-solarized8'
 
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'
@@ -92,13 +91,11 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=dark
+set background=light
 set guifont=Inconsolata-dz\ for\ Powerline:h13
 set linespace=1
 
-colorscheme deep-space
-
-nnoremap <silent> <Leader><Enter> :Buffers<CR>
+colorscheme solarized8
 
 set autoread
 set autoindent

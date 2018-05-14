@@ -7,22 +7,22 @@ call plug#begin('~/.vim/plugged')
 
 " Essential plugins
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/vim-slash'
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
-Plug 'tomtom/tlib_vim'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'mattn/emmet-vim'
 Plug 'janko-m/vim-test'
 Plug 'roman/golden-ratio'
+Plug 'mattn/emmet-vim'
 
 " Linting
 Plug 'w0rp/ale'
+
+" Completion
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
 
 " Search
 Plug 'rking/ag.vim'
@@ -37,51 +37,26 @@ noremap <c-p> :FZF<CR>
 noremap <c-b> :Buffers<CR>
 noremap <silent> <leader>m :History<CR>
 
-" Ruby & Rails
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'tpope/vim-rake', { 'for': 'ruby' }
+" Languages (I guess?)
+Plug 'sheerun/vim-polyglot', { 'tag': 'v3.3.2' }
+Plug '1995eaton/vim-better-javascript-completion'
 
-" Javascript
-Plug 'marijnh/tern_for_vim', { 'for': 'javascript' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
-Plug 'AndrewRadev/ember_tools.vim'
+" CSS
+Plug '1995eaton/vim-better-css-completion'
 
 " Highlighting
-Plug 'othree/html5.vim'
-Plug 'othree/yajs.vim'
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'fatih/vim-go', { 'for': 'go' }
 
 " Utils
 Plug 'junegunn/vim-easy-align'
-Plug 'terryma/vim-multiple-cursors'
+
+"Tmux
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
 
-" Writing
-Plug 'junegunn/goyo.vim'
-
 " Themes
-Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/seoul256.vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'lifepillar/vim-solarized8'
-
-" Autocomplete
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
-Plug 'calebeby/ncm-css'
-Plug 'fgrsnau/ncm-otherbuf'
-Plug 'roxma/ncm-rct-complete'
-Plug 'othree/jspc.vim'
-
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
+Plug 'andreypopp/vim-colors-plain'
 
 call plug#end()
 
@@ -91,11 +66,13 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=light
+set background=dark
 set guifont=Inconsolata-dz\ for\ Powerline:h13
 set linespace=1
 
-colorscheme solarized8
+colorscheme plain
+
+nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
 set autoread
 set autoindent
@@ -124,7 +101,9 @@ set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 set ttimeout
 set ttimeoutlen=1
+set colorcolumn=80
 set cursorline
+set norelativenumber
 set lazyredraw
 
 " Save when losing focus
@@ -137,9 +116,6 @@ endfunction
 " Automatic formatting
 au BufWritePre * :call StripSpaces()
 au BufNewFile * set noeol
-
-" No show command
-au VimEnter * set nosc
 
 " Stop the arrow keys from working
 noremap <Up> <NOP>
@@ -158,7 +134,7 @@ nmap <leader>s<up> :leftabove new<cr>
 nmap <leader>s<down> :rightbelow new<cr>
 
 " Close everything but this
-map <leader>o :on<cr>
+map <leader>qa :on<cr>
 
 " Close this
 map <leader>q :q<cr>
@@ -168,14 +144,6 @@ noremap <tab> <c-w><c-w>
 
 " Switch between last two buffers
 nnoremap <leader><leader> <C-^>
-
-" Resize buffers
-if bufwinnr(1)
-  nmap Ä <C-W><<C-W><
-  nmap Ö <C-W>><C-W>>
-  nmap ö <C-W>-<C-W>-
-  nmap ä <C-W>+<C-W>+
-endif
 
 set wildignore+=*/vendor/**
 set wildignore+=*/tmp/**
@@ -224,19 +192,15 @@ set fillchars+=stl:\ ,stlnc:\
 " EasyAlign
 vmap <Enter> <Plug>(EasyAlign)
 
-" cursor
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-
 " Vimux runs tests in tmux windows
 let g:VimuxOrientation = "h"
 let g:VimuxHeight = "40"
 
-au FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-au FileType python setlocal omnifunc=pythoncomplete#Complete
-au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" au FileType css setlocal omnifunc=csscomplete#CompleteCSS
+" au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+" au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" au FileType python setlocal omnifunc=pythoncomplete#Complete
+" au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Linting
 let g:ale_linters = {
@@ -244,9 +208,6 @@ let g:ale_linters = {
 \ 'handlebars': ['ember-template-lint'],
 \ 'ruby': ['rubocop'],
 \}
-
-" Enable syntax highlighting for JSDoc
-let g:javascript_plugin_jsdoc = 1
 
 " Test mappings
 let test#strategy = "vimux"
@@ -324,4 +285,8 @@ let g:UltiSnipsExpandTrigger="<c-e>"
 
 let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
-let g:UltiSnipsEnableSnipMate = 0
+
+" Hide statusline for fzf
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler

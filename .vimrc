@@ -1,6 +1,6 @@
 set nocompatible
 
-syntax on
+syntax off
 filetype plugin indent on
 
 call plug#begin('~/.vim/plugged')
@@ -57,6 +57,12 @@ Plug 'benmills/vimux'
 " Themes
 Plug 'junegunn/seoul256.vim'
 Plug 'andreypopp/vim-colors-plain'
+Plug 'chriskempson/vim-tomorrow-theme'
+
+" Autocomplete
+Plug 'roxma/nvim-completion-manager'
+Plug 'calebeby/ncm-css'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
 call plug#end()
 
@@ -66,11 +72,11 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=dark
+set background=light
 set guifont=Inconsolata-dz\ for\ Powerline:h13
 set linespace=1
 
-colorscheme plain
+colorscheme Tomorrow-Night
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -103,7 +109,7 @@ set ttimeout
 set ttimeoutlen=1
 set colorcolumn=80
 set cursorline
-set norelativenumber
+set relativenumber
 set lazyredraw
 
 " Save when losing focus

@@ -1,6 +1,6 @@
 set nocompatible
 
-syntax off
+syntax on
 filetype plugin indent on
 
 call plug#begin('~/.vim/plugged')
@@ -10,6 +10,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
@@ -39,7 +40,7 @@ noremap <silent> <leader>m :History<CR>
 
 " Languages (I guess?)
 Plug 'sheerun/vim-polyglot', { 'tag': 'v3.3.2' }
-Plug '1995eaton/vim-better-javascript-completion'
+" Plug '1995eaton/vim-better-javascript-completion'
 
 " CSS
 Plug '1995eaton/vim-better-css-completion'
@@ -49,6 +50,7 @@ Plug 'slim-template/vim-slim', { 'for': 'slim' }
 
 " Utils
 Plug 'junegunn/vim-easy-align'
+Plug 'AndrewRadev/ember_tools.vim'
 
 "Tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -57,7 +59,9 @@ Plug 'benmills/vimux'
 " Themes
 Plug 'junegunn/seoul256.vim'
 Plug 'andreypopp/vim-colors-plain'
-Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'lifepillar/vim-solarized8'
+Plug 'romainl/Apprentice'
+Plug 'nightsense/snow'
 
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'
@@ -76,7 +80,7 @@ set background=light
 set guifont=Inconsolata-dz\ for\ Powerline:h13
 set linespace=1
 
-colorscheme Tomorrow-Night
+colorscheme snow
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -102,7 +106,7 @@ set incsearch
 set ignorecase
 set smartcase
 set list
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,nbsp:_,
+set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 set ttimeout
@@ -111,6 +115,7 @@ set colorcolumn=80
 set cursorline
 set relativenumber
 set lazyredraw
+set inccommand=nosplit
 
 " Save when losing focus
 au FocusLost * :silent! wall
@@ -220,6 +225,7 @@ let test#strategy = "vimux"
 
 " Ensure vim-test uses the right command
 let test#javascript#jest#executable = 'npm test'
+let test#custom_runners = {'JavaScript': ['Qunit']}
 
 nmap <silent> <leader>s :TestNearest<CR>
 nmap <silent> <leader>t :TestFile<CR>
@@ -260,8 +266,8 @@ function! LinterStatus() abort
    let l:counts = ale#statusline#Count(bufnr(''))
    let l:all_errors = l:counts.error + l:counts.style_error
    let l:all_non_errors = l:counts.total - l:all_errors
-   return l:counts.total == 0 ? '' : printf(
-   \ 'W:%d E:%d',
+   return l:counts.total == 0 ? '✓' : printf(
+   \ '✘ W:%d E:%d',
    \ l:all_non_errors,
    \ l:all_errors
    \)
@@ -296,3 +302,6 @@ let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+" vim-signify
+let g:signify_vcs_list = [ 'git' ]

@@ -40,7 +40,7 @@ noremap <silent> <leader>m :History<CR>
 
 " Languages (I guess?)
 Plug 'sheerun/vim-polyglot', { 'tag': 'v3.3.2' }
-" Plug '1995eaton/vim-better-javascript-completion'
+Plug '1995eaton/vim-better-javascript-completion'
 
 " CSS
 Plug '1995eaton/vim-better-css-completion'
@@ -62,6 +62,7 @@ Plug 'andreypopp/vim-colors-plain'
 Plug 'lifepillar/vim-solarized8'
 Plug 'romainl/Apprentice'
 Plug 'nightsense/snow'
+Plug 'w0ng/vim-hybrid'
 
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'
@@ -76,11 +77,11 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=light
+set background=dark
 set guifont=Inconsolata-dz\ for\ Powerline:h13
 set linespace=1
 
-colorscheme snow
+colorscheme plain
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -115,7 +116,7 @@ set colorcolumn=80
 set cursorline
 set relativenumber
 set lazyredraw
-set inccommand=nosplit
+" set inccommand=nosplit
 
 " Save when losing focus
 au FocusLost * :silent! wall

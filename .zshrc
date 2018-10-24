@@ -13,6 +13,7 @@ eval "$(rbenv init -)"
 
 # Write some aliases
 export EDITOR='/usr/local/bin/nvim'
+
 alias vim="/usr/local/bin/nvim"
 alias rc="rails console"
 alias rdm="rake db:migrate"
@@ -39,3 +40,6 @@ export NVM_DIR="/Users/swastik/.nvm"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="$HOME/.yarn/bin:$PATH"
+
+# Apply snow
+[ -n "$PS1" ] && sh ~/.vim/plugged/snow/shell/snow_dark.sh

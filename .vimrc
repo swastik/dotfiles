@@ -51,6 +51,7 @@ Plug 'slim-template/vim-slim', { 'for': 'slim' }
 " Utils
 Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/ember_tools.vim'
+Plug 'itchyny/lightline.vim'
 
 "Tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -58,11 +59,7 @@ Plug 'benmills/vimux'
 
 " Themes
 Plug 'junegunn/seoul256.vim'
-Plug 'andreypopp/vim-colors-plain'
-Plug 'lifepillar/vim-solarized8'
-Plug 'romainl/Apprentice'
 Plug 'nightsense/snow'
-Plug 'w0ng/vim-hybrid'
 
 " Autocomplete
 Plug 'roxma/nvim-completion-manager'
@@ -81,7 +78,8 @@ set background=dark
 set guifont=Inconsolata-dz\ for\ Powerline:h13
 set linespace=1
 
-colorscheme plain
+colorscheme snow
+let g:lightline = { 'colorscheme': 'snow_dark' }
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -107,7 +105,7 @@ set incsearch
 set ignorecase
 set smartcase
 set list
-set listchars=eol:¬,tab:>·,trail:·,extends:>,precedes:<
+set listchars=tab:>·,trail:·,extends:>,precedes:<
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 set ttimeout
@@ -216,8 +214,8 @@ let g:VimuxHeight = "40"
 
 " Linting
 let g:ale_linters = {
-\ 'javascript': ['jshint', 'jscs'],
-\ 'handlebars': ['ember-template-lint'],
+\ 'javascript': ['eslint'],
+\ 'html': ['ember-template-lint'],
 \ 'ruby': ['rubocop'],
 \}
 

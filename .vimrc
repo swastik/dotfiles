@@ -17,6 +17,12 @@ Plug 'tpope/vim-commentary'
 Plug 'janko-m/vim-test'
 Plug 'roman/golden-ratio'
 Plug 'mattn/emmet-vim'
+Plug 'junegunn/vim-slash'
+Plug 'rking/ag.vim'
+
+" Go stuff
+Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'fatih/vim-go'
 
 " Linting
 Plug 'w0rp/ale'
@@ -24,9 +30,6 @@ Plug 'w0rp/ale'
 " Completion
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
-
-" Search
-Plug 'rking/ag.vim'
 
 " FZF for search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -36,35 +39,49 @@ Plug 'junegunn/fzf.vim'
 set rtp+=~/.fzf
 noremap <c-p> :FZF<CR>
 noremap <c-b> :Buffers<CR>
-noremap <silent> <leader>m :History<CR>
+noremap <c-n> :History<CR>
 
 " Languages (I guess?)
 Plug 'sheerun/vim-polyglot', { 'tag': 'v3.3.2' }
 Plug '1995eaton/vim-better-javascript-completion'
+Plug 'joukevandermaas/vim-ember-hbs'
 
 " CSS
 Plug '1995eaton/vim-better-css-completion'
 
 " Highlighting
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
 
 " Utils
 Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/ember_tools.vim'
-Plug 'itchyny/lightline.vim'
 
 "Tmux
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
 
 " Themes
-Plug 'junegunn/seoul256.vim'
-Plug 'nightsense/snow'
+Plug 'rakr/vim-one'
+Plug 'rakr/vim-two-firewatch'
+Plug 'fmoralesc/molokayo'
 
 " Autocomplete
-Plug 'roxma/nvim-completion-manager'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
 Plug 'calebeby/ncm-css'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" Plugins for completions
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-go'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+Plug 'wellle/tmux-complete.vim'
 
 call plug#end()
 
@@ -74,12 +91,13 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set background=dark
-set guifont=Inconsolata-dz\ for\ Powerline:h13
+set guifont=Meslo
 set linespace=1
 
-colorscheme snow
-let g:lightline = { 'colorscheme': 'snow_dark' }
+set background=dark
+
+let g:two_firewatch_italics=1
+colorscheme two-firewatch
 
 nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
@@ -88,7 +106,6 @@ set autoindent
 set smartindent
 set scrolloff=5
 set expandtab smarttab
-set completeopt=menuone,preview
 set modelines=0
 set shiftwidth=2
 set clipboard=unnamed
@@ -97,6 +114,7 @@ set encoding=utf-8
 set tabstop=2
 set nowrap
 set number
+set relativenumber
 set nowritebackup
 set noswapfile
 set nobackup
@@ -105,16 +123,20 @@ set incsearch
 set ignorecase
 set smartcase
 set list
-set listchars=tab:>·,trail:·,extends:>,precedes:<
+set listchars=tab:..,trail:·
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 set ttimeout
 set ttimeoutlen=1
-set colorcolumn=80
+set colorcolumn=120
 set cursorline
-set relativenumber
 set lazyredraw
-" set inccommand=nosplit
+set inccommand=nosplit
+
+" ncm2 will get the cursor stuck if you use menuone,preview.
+" This fixes that. For more info, :help Ncm2PopupOpen
+au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+au User Ncm2PopupClose set completeopt=menuone,preview
 
 " Save when losing focus
 au FocusLost * :silent! wall
@@ -161,9 +183,6 @@ set wildignore+=*/node_modules/**
 set wildignore+=*/bower_components/**
 set wildignore+=*/build/**
 set wildignore+=*/log/**
-
-" Mapping for Ag
-nmap <leader>g :Ag<cr>
 
 " Quit with :Q
 command! -nargs=0 Quit :qa!
@@ -266,7 +285,7 @@ function! LinterStatus() abort
    let l:all_errors = l:counts.error + l:counts.style_error
    let l:all_non_errors = l:counts.total - l:all_errors
    return l:counts.total == 0 ? '✓' : printf(
-   \ '✘ W:%d E:%d',
+   \ '✘ Warnings: %d Errors: %d',
    \ l:all_non_errors,
    \ l:all_errors
    \)
@@ -276,11 +295,12 @@ set laststatus=2
 set statusline=
 set statusline+=\ %l
 set statusline+=\ %*
-set statusline+=\ ‹‹
+set statusline+=\ ››
 set statusline+=\ %f\ %*
 set statusline+=\ ››
 set statusline+=\ %m
-set statusline+=\ %F
+set statusline+=\ %t
+set statusline+=\ ››
 set statusline+=%=
 set statusline+=\ %{LinterStatus()}
 set statusline+=\ ‹‹

@@ -7,24 +7,26 @@ fi
 
 # PATH
 export PATH="~/.rbenv/shims:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH=$PATH:$(go env GOPATH)/bin
 
 # Get rbenv going
 eval "$(rbenv init -)"
 
 # Write some aliases
 export EDITOR='/usr/local/bin/nvim'
+alias vim='/usr/local/bin/nvim'
+alias v=vim
+alias rc='rails console'
+alias rdm='rake db:migrate'
+alias be='bundle exec'
+alias e=exit
 
-alias vim="/usr/local/bin/nvim"
-alias rc="rails console"
-alias rdm="rake db:migrate"
-alias be="bundle exec"
-
-# Ensure filtering by ag before passing on to FZF
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_DEFAULT_OPTS='
-  --color fg:243,bg:255,hl:21,fg+:232,bg+:254,hl+:21
-  --color info:108,prompt:109,spinner:108,pointer:21,marker:168
-'
+# Use fd
+export FZF_DEFAULT_COMMAND="fd . -t f" # -t f to filter by files
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Set the color of autosuggestions
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
@@ -39,7 +41,6 @@ export NVM_DIR="/Users/swastik/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH="$HOME/.yarn/bin:$PATH"
-
-# Apply snow
-[ -n "$PS1" ] && sh ~/.vim/plugged/snow/shell/snow_dark.sh
+export NODE_OPTIONS="--max_old_space_size=4096"
+export GPG_TTY=$(tty)
+export PURE_PROMPT_SYMBOL=ϟ

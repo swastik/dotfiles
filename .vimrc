@@ -1,5 +1,3 @@
-set nocompatible
-
 syntax on
 filetype plugin indent on
 
@@ -19,6 +17,9 @@ Plug 'roman/golden-ratio'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/vim-slash'
 Plug 'rking/ag.vim'
+Plug 'mbbill/undotree'
+Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " Go stuff
 Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
@@ -44,7 +45,7 @@ noremap <c-n> :History<CR>
 " Languages (I guess?)
 Plug 'sheerun/vim-polyglot', { 'tag': 'v3.3.2' }
 Plug '1995eaton/vim-better-javascript-completion'
-Plug 'joukevandermaas/vim-ember-hbs'
+Plug 'mustache/vim-mustache-handlebars'
 
 " CSS
 Plug '1995eaton/vim-better-css-completion'
@@ -57,6 +58,7 @@ Plug 'junegunn/goyo.vim'
 " Utils
 Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/ember_tools.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 
 "Tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -66,6 +68,10 @@ Plug 'benmills/vimux'
 Plug 'rakr/vim-one'
 Plug 'rakr/vim-two-firewatch'
 Plug 'fmoralesc/molokayo'
+Plug 'andreypopp/vim-colors-plain'
+Plug 'w0ng/vim-hybrid'
+Plug 'arcticicestudio/nord-vim'
+Plug 'junegunn/seoul256.vim'
 
 " Autocomplete
 Plug 'ncm2/ncm2'
@@ -83,6 +89,9 @@ Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 Plug 'wellle/tmux-complete.vim'
 
+" Import completion magic
+Plug 'galooshi/vim-import-js'
+
 call plug#end()
 
 let mapleader=","
@@ -91,15 +100,13 @@ let mapleader=","
 set t_Co=256
 set termguicolors
 
-set guifont=Meslo
+set guifont="PragmataPro Mono Liga"
 set linespace=1
 
 set background=dark
 
 let g:two_firewatch_italics=1
 colorscheme two-firewatch
-
-nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
 set autoread
 set autoindent
@@ -113,8 +120,8 @@ set synmaxcol=128
 set encoding=utf-8
 set tabstop=2
 set nowrap
-set number
-set relativenumber
+" set number
+" set relativenumber
 set nowritebackup
 set noswapfile
 set nobackup
@@ -291,23 +298,24 @@ function! LinterStatus() abort
    \)
 endfunction
 
+" Partially taken from
+" https://github.com/liuchengxu/eleline.vim/blob/master/plugin/eleline.vim
+function! ElelineGitBranch(...) abort
+  let l:head = fugitive#head()
+  let l:symbol = " \ue0a0 "
+  return empty(l:head) ? '…' : l:symbol.l:head . ' '
+endfunction
+
 set laststatus=2
 set statusline=
-set statusline+=\ %l
-set statusline+=\ %*
-set statusline+=\ ››
-set statusline+=\ %f\ %*
-set statusline+=\ ››
 set statusline+=\ %m
-set statusline+=\ %t
-set statusline+=\ ››
+set statusline+=\ %f
 set statusline+=%=
+set statusline+=\ %{ElelineGitBranch()}
+set statusline+=\ ·
+set statusline+=\ %l
+set statusline+=\ ·
 set statusline+=\ %{LinterStatus()}
-set statusline+=\ ‹‹
-set statusline+=\ %{strftime('%R',\ getftime(expand('%')))}
-set statusline+=\ ::
-set statusline+=\ %n
-set statusline+=\ ››\ %*
 
 " Ultisnips
 let g:UltiSnipsJumpForwardTrigger="<c-e>"
@@ -324,3 +332,23 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 
 " vim-signify
 let g:signify_vcs_list = [ 'git' ]
+
+" Copy current buffer's relative path
+noremap <c-f> :let @+ = expand("%")<CR>
+
+" Build a quickfix list with ctrl-a, ctrl-q
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Fugitive shortcuts
+nnoremap <silent> <Leader>gs :Gstatus<CR>
+nnoremap <silent> <Leader>gc :Gcommit<CR>

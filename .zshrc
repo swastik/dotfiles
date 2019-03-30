@@ -28,8 +28,13 @@ alias e=exit
 export FZF_DEFAULT_COMMAND="fd . -t f" # -t f to filter by files
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# Set the color of autosuggestions
+# Set FZF colors
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
+export FZF_DEFAULT_OPTS='
+  --color fg:250,bg:0,hl:3,bg+:0,fg+:255,hl+:4
+  --color info:36,prompt:244,spinner:255,pointer:36,marker:36
+  --bind ctrl-a:select-all
+'
 
 # Up and down arrow keys to search forward and backward
 bindkey "^[[A" history-beginning-search-backward

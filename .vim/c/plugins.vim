@@ -54,6 +54,7 @@ Plug 'junegunn/vim-easy-align'
 
 "Tmux
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'benmills/vimux'
 
 " Themes

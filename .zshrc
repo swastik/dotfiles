@@ -1,51 +1,22 @@
-# Source Prezto.
+# Source zshrc
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# PATH
-export PATH="~/.rbenv/shims:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH=$PATH:$(go env GOPATH)/bin
-
-# Get rbenv going
-eval "$(rbenv init -)"
-
-# Write some aliases
-export EDITOR='/usr/local/bin/nvim'
-alias vim='/usr/local/bin/nvim'
-alias v=vim
-alias rc='rails console'
-alias rdm='rake db:migrate'
-alias be='bundle exec'
+alias python=python3
+alias vim=nvim
+alias v=nvim
 alias e=exit
 
-# Use fd
+export EDITOR=nvim
 export FZF_DEFAULT_COMMAND="fd . -t f" # -t f to filter by files
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# Set FZF colors
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 export FZF_DEFAULT_OPTS='
   --color fg:250,bg:0,hl:3,bg+:0,fg+:255,hl+:4
   --color info:36,prompt:244,spinner:255,pointer:36,marker:36
   --bind ctrl-a:select-all
 '
 
-# Up and down arrow keys to search forward and backward
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
-
-# Load NVM
-export NVM_DIR="/Users/swastik/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export NODE_OPTIONS="--max_old_space_size=4096"
-export GPG_TTY=$(tty)
-export PURE_PROMPT_SYMBOL=ϟ
+# Load rbenv
+eval "$(rbenv init -)"

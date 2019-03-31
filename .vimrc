@@ -4,7 +4,7 @@ filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
 " Source plugins
-source ~/.vim/plugins.vim
+source ~/.vim/c/plugins.vim
 set rtp+=~/.fzf
 call plug#end()
 

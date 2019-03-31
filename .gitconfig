@@ -1,21 +1,3 @@
 [user]
 	name = Swastik
 	email = swastik@enlist.io
-[diff]
-[color]
-[alias]
-  st = status
-  aa = add --all
-  ci = commit --verbose
-  co = checkout
-  di = diff
-  dc = diff --cached
-  ff = merge --ff-only
-	pt = push -u origin
-[push]
-	default = simple
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true

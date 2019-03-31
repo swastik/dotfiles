@@ -13,8 +13,8 @@ alias e=exit
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND="fd . -t f" # -t f to filter by files
 export FZF_DEFAULT_OPTS='
-  --color fg:250,bg:0,hl:3,bg+:0,fg+:255,hl+:4
-  --color info:36,prompt:244,spinner:255,pointer:36,marker:36
+  --color fg:#abb2bf,bg:0,hl:#6e88a6,bg+:0,fg+:255,hl+:#6e88a6
+  --color info:#c8ae9d,prompt:244,spinner:255,pointer:#e06c75,marker:#c8ae9d
   --bind ctrl-a:select-all
 '
 

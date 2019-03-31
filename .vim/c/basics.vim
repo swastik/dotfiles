@@ -56,9 +56,24 @@ nmap <leader>sp :rightbelow vnew<cr>
 " Quit with :Q
 command! -nargs=0 Quit :qa!
 
+" Switch between last two buffers
+nnoremap <leader><leader> <C-^>
+
+" Tab between buffers
+noremap <tab> <c-w><c-w>
+
 " Make this mistake all the time
 command! W w
 command! E e
 command! Q q
 command! Wq wq
 command! WQ wq
+
+" Code folding
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+set termencoding=utf-8
+set fillchars+=stl:\ ,stlnc:\

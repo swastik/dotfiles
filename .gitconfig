@@ -1,3 +1,15 @@
 [user]
-	name = Swastik
-	email = swastik@enlist.io
+  name = Swastik Agarwal
+  email = swastik@enlist.io
+[core]
+  editor = "vim"
+[difftool]
+  trustExitCode = true
+[merge]
+  tool = nvimmerge
+[mergetool "nvimmerge"]
+  cmd = nvim -f -c "Gdiff" "$MERGED"
+[diff]
+  tool = nvimdiff
+[difftool "nvimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE

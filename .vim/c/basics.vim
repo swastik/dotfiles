@@ -29,6 +29,9 @@ set colorcolumn=120
 set cursorline
 set lazyredraw
 
+set pumblend=20
+set wildoptions=pum
+
 if has('nvim')
   set inccommand=nosplit
 endif

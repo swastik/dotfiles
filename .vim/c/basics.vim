@@ -80,3 +80,8 @@ set foldlevel=1         "this is just what i use
 
 set termencoding=utf-8
 set fillchars+=stl:\ ,stlnc:\
+
+" netrw customizations
+let g:netrw_liststyle = 3    " use the tree list view
+let g:netrw_banner = 0       " hide the banner
+let g:netrw_browse_split = 1 " open new files in a vertical split

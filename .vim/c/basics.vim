@@ -21,6 +21,7 @@ set ignorecase
 set smartcase
 set list
 set listchars=tab:..,trail:·
+set fillchars=vert:\|,fold:-
 set directory=~/.vim/_tmp//
 set backupdir=~/.vim/backup//
 set ttimeout
@@ -85,3 +86,22 @@ set fillchars+=stl:\ ,stlnc:\
 let g:netrw_liststyle = 3    " use the tree list view
 let g:netrw_banner = 0       " hide the banner
 let g:netrw_browse_split = 1 " open new files in a vertical split
+
+" vim-signify
+let g:signify_vcs_list = [ 'git' ]
+
+" Copy current buffer's relative path
+noremap <c-f> :let @+ = expand("%")<CR>
+
+" Emmet won't recognize JSX. This will fix it.
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
+
+vmap <Enter> <Plug>(EasyAlign)
+
+" Indent
+let g:indentLine_char = '┆'
+let g:indentLine_color_gui = '#3a424c'

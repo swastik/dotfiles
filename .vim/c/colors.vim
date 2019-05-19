@@ -6,5 +6,4 @@ set linespace=1
 
 set background=dark
 
-let g:two_firewatch_italics=1
 colorscheme two-firewatch

@@ -25,14 +25,20 @@ set statusline+=%1*\ %n
 set statusline+=\ Ξ
 set statusline+=\ %l/%L
 set statusline+=\ ·
-set statusline+=\ %f
+set statusline+=%5*\ %f
 set statusline+=%=
-set statusline+=\ %{ElelineGitBranch()}
+set statusline+=%4*\%{ElelineGitBranch()}
 set statusline+=%2*\%{LinterWarnings()}
 set statusline+=%3*\%{LinterErrors()}
 
 hi StatusLine guibg=#21242b
-hi User1 guibg=#21242b guifg=#abb2bf
-hi User2 guifg=#21242b guibg=#e5c07b
-hi User3 guifg=#21242b guibg=#e06c75
+hi User1 guibg=#21242b guifg=#abb2bf gui=bold
+
+hi User5 guibg=#21242b guifg=#abb2bf gui=none
+hi User4 guifg=#21242b guibg=#abb2bf gui=bold
+
+hi User2 guifg=#21242b guibg=#e5c07b gui=none
+hi User3 guifg=#21242b guibg=#e06c75 gui=none
 hi StatusLineNC guifg=#21242b guibg=#21242b
+
+hi SignColumn guibg=f1f1f1

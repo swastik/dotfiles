@@ -20,3 +20,5 @@ let g:fzf_action = {
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path "1;16"', fzf#vim#with_preview(), <bang>0)

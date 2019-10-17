@@ -5,18 +5,27 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Some aliases
 alias python=python3
 alias vim=nvim
 alias v=nvim
-alias e=exit
-
-export EDITOR=nvim
-export FZF_DEFAULT_COMMAND="fd . -t f" # -t f to filter by files
-export FZF_DEFAULT_OPTS='
-  --color fg:#abb2bf,bg:0,hl:#6e88a6,bg+:0,fg+:255,hl+:#6e88a6
-  --color info:#c8ae9d,prompt:244,spinner:255,pointer:#e06c75,marker:#c8ae9d
-  --bind ctrl-a:select-all
-'
+alias e='exit'
+alias gb='gco $(git branch | fzf-tmux -d 15)'
 
 # Load rbenv
 eval "$(rbenv init -)"
+
+# Use fd with FZF. And some FZF settings.
+export FZF_DEFAULT_COMMAND="fd . --type file --color always"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+_gen_fzf_default_opts() {
+export FZF_DEFAULT_OPTS="
+  --color fg:#D8DEE9,bg:#2E3440,hl:#A3BE8C,fg+:#D8DEE9,bg+:#434C5E,hl+:#A3BE8C
+  --color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
+  --bind ctrl-a:select-all
+  --ansi
+"
+}
+
+_gen_fzf_default_opts

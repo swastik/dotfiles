@@ -6,4 +6,4 @@ set linespace=1
 
 set background=dark
 
-colorscheme two-firewatch
+colorscheme nord

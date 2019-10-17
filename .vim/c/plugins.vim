@@ -3,7 +3,6 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
@@ -12,6 +11,10 @@ Plug 'roman/golden-ratio'
 Plug 'mattn/emmet-vim'
 Plug 'mbbill/undotree'
 Plug 'Yggdroot/indentLine'
+Plug 'stefandtw/quickfix-reflector.vim'
+Plug 'romainl/vim-qf'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'whiteinge/diffconflicts'
 
 " Testing
 Plug 'janko-m/vim-test'
@@ -23,23 +26,10 @@ Plug 'w0rp/ale'
 Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'fatih/vim-go'
 
-" Ember
-Plug 'AndrewRadev/ember_tools.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-
 " Completion
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'calebeby/ncm-css'
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-go'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
+Plug 'SirVer/ultisnips'
 Plug 'galooshi/vim-import-js'
 
 " FZF for search
@@ -47,7 +37,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 
 " Languages
-Plug 'sheerun/vim-polyglot', { 'tag': 'v3.3.2' }
+Plug 'sheerun/vim-polyglot'
 Plug 'mustache/vim-mustache-handlebars'
 
 " Utils
@@ -59,9 +49,13 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'benmills/vimux'
 
 " Themes
-Plug 'rakr/vim-one'
-Plug 'rakr/vim-two-firewatch'
 Plug 'andreypopp/vim-colors-plain'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'davidosomething/vim-colors-meh'
+Plug 'romainl/apprentice'
+Plug 'lifepillar/vim-solarized8'
+Plug 'lifepillar/vim-wwdc17-theme'
+Plug 'sjl/badwolf'
 Plug 'arcticicestudio/nord-vim'
-Plug 'ldelossa/vimdark'
+
+" Ember
+Plug 'AndrewRadev/ember_tools.vim'

@@ -29,6 +29,10 @@ set ttimeoutlen=1
 set colorcolumn=120
 set cursorline
 set lazyredraw
+set breakindent
+
+set conceallevel=2
+let g:vim_markdown_conceal = 0
 
 set pumblend=20
 set wildoptions=pum
@@ -50,9 +54,11 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
-" Stop hl from working too
-noremap h <NOP>
-noremap l <NOP>
+" In insert mode too
+inoremap <Up>    <NOP>
+inoremap <Down>  <NOP>
+inoremap <Left>  <NOP>
+inoremap <Right> <NOP>
 
 " Open new buffer
 nmap <leader>sp :rightbelow vnew<cr>
@@ -80,15 +86,11 @@ set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
 set termencoding=utf-8
-set fillchars+=stl:\ ,stlnc:\
 
 " netrw customizations
 let g:netrw_liststyle = 3    " use the tree list view
 let g:netrw_banner = 0       " hide the banner
 let g:netrw_browse_split = 1 " open new files in a vertical split
-
-" vim-signify
-let g:signify_vcs_list = [ 'git' ]
 
 " Copy current buffer's relative path
 noremap <c-f> :let @+ = expand("%")<CR>
@@ -104,4 +106,12 @@ vmap <Enter> <Plug>(EasyAlign)
 
 " Indent
 let g:indentLine_char = '┆'
-let g:indentLine_color_gui = '#3a424c'
+let g:indentLine_color_gui = '#3b4248'
+
+" Some fugitive stuff
+nnoremap <Leader>g :Gstatus<CR>
+nnoremap <Leader>d :Gdiff<CR>
+nnoremap <Leader>m :Gcommit<CR>
+
+" Open netrw for the current file
+map ,v :vsplit <C-R>=expand("%:p:h") . "/" <CR><CR>

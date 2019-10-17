@@ -22,3 +22,9 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path "1;16"', fzf#vim#with_preview(), <bang>0)
+
+" Search for the word under cursor
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+
+" use `:AF` to add missing TS imports / execute other TS server autofixes
+command! -nargs=0 AF :call CocAction('runCommand', 'tsserver.executeAutofix')

@@ -1,15 +1,12 @@
 [user]
   name = Swastik Agarwal
   email = 1569205+swastik@users.noreply.github.com
-[core]
-  editor = "vim"
-[difftool]
-  trustExitCode = true
 [merge]
-  tool = nvimmerge
-[mergetool "nvimmerge"]
-  cmd = nvim -f -c "Gdiff" "$MERGED"
-[diff]
-  tool = nvimdiff
-[difftool "nvimdiff"]
-  cmd = nvim -d $LOCAL $REMOTE
+	tool = diffconflicts
+[mergetool "diffconflicts"]
+	cmd = nvim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	trustExitCode = true
+[mergetool]
+	keepBackup = false
+[core]
+	editor = nvim

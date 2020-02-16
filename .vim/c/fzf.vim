@@ -26,5 +26,18 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path "1;16"', fzf#
 " Search for the word under cursor
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
-" use `:AF` to add missing TS imports / execute other TS server autofixes
-command! -nargs=0 AF :call CocAction('runCommand', 'tsserver.executeAutofix')
+" Update fzf colors
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Constant'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }

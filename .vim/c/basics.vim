@@ -34,7 +34,7 @@ set breakindent
 set conceallevel=2
 let g:vim_markdown_conceal = 0
 
-set pumblend=20
+set pumblend=0
 set wildoptions=pum
 
 if has('nvim')
@@ -95,23 +95,18 @@ let g:netrw_browse_split = 1 " open new files in a vertical split
 " Copy current buffer's relative path
 noremap <c-f> :let @+ = expand("%")<CR>
 
-" Emmet won't recognize JSX. This will fix it.
-let g:user_emmet_settings = {
-\  'javascript.jsx' : {
-\      'extends' : 'jsx',
-\  },
-\}
-
 vmap <Enter> <Plug>(EasyAlign)
-
-" Indent
-let g:indentLine_char = '┆'
-let g:indentLine_color_gui = '#3b4248'
-
-" Some fugitive stuff
-nnoremap <Leader>g :Gstatus<CR>
-nnoremap <Leader>d :Gdiff<CR>
-nnoremap <Leader>m :Gcommit<CR>
 
 " Open netrw for the current file
 map ,v :vsplit <C-R>=expand("%:p:h") . "/" <CR><CR>
+
+" Some go stuff
+"autocmd FileType go set noexpandtab
+autocmd FileType go set preserveindent
+autocmd FileType go set softtabstop=0
+autocmd FileType go set shiftwidth=2
+autocmd FileType go set tabstop=2
+autocmd FileType go set listchars=tab:\ \ ,trail:.,extends:#,nbsp:.
+
+" vim-go: use goimports instead of gofmt
+let g:go_fmt_command = "goimports"

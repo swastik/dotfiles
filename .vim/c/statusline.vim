@@ -1,17 +1,3 @@
-" ALE Errors
-function! LinterWarnings() abort
-   let l:counts = ale#statusline#Count(bufnr(''))
-   let l:all_errors = l:counts.error + l:counts.style_error
-   let l:all_non_errors = l:counts.total - l:all_errors
-   return l:all_non_errors == 0 ? '' : printf('  [WARNING] %d ', l:all_non_errors)
-endfunction
-
-function! LinterErrors() abort
-   let l:counts = ale#statusline#Count(bufnr(''))
-   let l:all_errors = l:counts.error + l:counts.style_error
-   return l:all_errors == 0 ? '' : printf('  [ERROR] %d ', l:all_errors)
-endfunction
-
 " Partially taken from https://github.com/liuchengxu/eleline.vim/blob/master/plugin/eleline.vim
 function! ElelineGitBranch(...) abort
   let l:head = fugitive#head()
@@ -35,16 +21,14 @@ endfunction
 set laststatus=2
 set statusline=
 set statusline+=%1*\ %n
-set statusline+=\ Ξ
+set statusline+=\ Œû
 set statusline+=\ %l/%L
-set statusline+=\ ·
+set statusline+=\ Œá
 set statusline+=%5*\ %f
 set statusline+=\ %m
 set statusline+=%=
 set statusline+=%4*\%{ElelineGitBranch()}
 set statusline+=%6*\%{ElelineGitStatus()}
-set statusline+=%2*\%{LinterWarnings()}
-set statusline+=%3*\%{LinterErrors()}
 
 hi StatusLine guibg=colour0
 hi User1 guibg=#3B4252 guifg=colour2 gui=bold

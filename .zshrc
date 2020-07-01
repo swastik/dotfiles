@@ -23,6 +23,14 @@ export FZF_DEFAULT_COMMAND="fd . --type file"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+ --color=fg:#c7c7c7,bg:#222222,hl:#ffffff
+ --color=fg+:#f1f1f1,bg+:#222222,hl+:#008ec4
+ --color=info:#999999,prompt:#008ec4,pointer:#008ec4
+ --color=marker:#999999,spinner:#008ec4,header:#999999
+  --bind ctrl-a:select-all
+ '
+
 # Install gems to the correct place. Helps avoid permission errors.
 export GEM_HOME="$HOME/.gem"
 

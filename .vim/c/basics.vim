@@ -32,7 +32,14 @@ set lazyredraw
 set breakindent
 
 set conceallevel=2
-let g:vim_markdown_conceal = 0
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_auto_insert_bullets = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_no_extensions_in_markdown = 0
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_strikethrough = 0
+let g:vim_markdown_autowrite = 1
 
 set pumblend=0
 set wildoptions=pum

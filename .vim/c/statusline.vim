@@ -21,21 +21,22 @@ endfunction
 set laststatus=2
 set statusline=
 set statusline+=%1*\ %n
-set statusline+=\ Œû
+set statusline+=\ Ξ
 set statusline+=\ %l/%L
-set statusline+=\ Œá
+set statusline+=\ ·
 set statusline+=%5*\ %f
 set statusline+=\ %m
 set statusline+=%=
 set statusline+=%4*\%{ElelineGitBranch()}
 set statusline+=%6*\%{ElelineGitStatus()}
 
-hi StatusLine guibg=colour0
-hi User1 guibg=#3B4252 guifg=colour2 gui=bold
+hi StatusLine guibg=colour10
 
-hi User5 guibg=#3B4252 guifg=colour2 gui=none
-hi User4 guibg=#3B4252 guifg=colour2 gui=bold
-hi User6 guibg=#3B4252 guifg=colour2 gui=none
+hi User1 guibg=colour1 guifg=colour2 gui=bold
 
-hi User2 guibg=#3B4252 guifg=colour4 gui=none
-hi User3 guifg=#3B4252 guifg=colour5 gui=none
+hi User5 guibg=colour1 guifg=colour2 gui=none
+hi User4 guibg=colour1 guifg=colour2 gui=bold
+hi User6 guibg=colour1 guifg=colour2 gui=none
+
+hi User2 guibg=colour1 guifg=colour4 gui=none
+hi User3 guifg=colour1 guifg=colour5 gui=none

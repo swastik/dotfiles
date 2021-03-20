@@ -40,3 +40,8 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Highlight colors
+hi! CocErrorSign guifg=#cf8164
+hi! CocInfoSign guibg=#5b5f71
+hi! CocWarningSign guifg=#d2b45f

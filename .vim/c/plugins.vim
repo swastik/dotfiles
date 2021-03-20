@@ -13,6 +13,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'whiteinge/diffconflicts'
 Plug 'wellle/targets.vim'
 Plug 'roman/golden-ratio'
+Plug 'tpope/vim-abolish'
 
 " Testing
 Plug 'janko-m/vim-test'
@@ -20,7 +21,6 @@ Plug 'janko-m/vim-test'
 " Go stuff
 Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
 
 " Completion
 Plug 'wellle/tmux-complete.vim'
@@ -34,7 +34,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Ember
 Plug 'AndrewRadev/ember_tools.vim'
@@ -49,9 +49,14 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'benmills/vimux'
 
 " Themes
+Plug 'morhetz/gruvbox'
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'habamax/vim-gruvbit'
 Plug 'andreypopp/vim-colors-plain'
-Plug 'davidosomething/vim-colors-meh'
+Plug 'pbrisbin/vim-colors-off'
+Plug 'arzg/vim-substrata'
+Plug 'lifepillar/vim-solarized8'
 Plug 'arzg/vim-colors-xcode'
-Plug 'pgdouyon/vim-yin-yang'
-Plug 'davidosomething/vim-colors-meh'
-Plug 'hardselius/warlock'
+Plug 'cormacrelf/vim-colors-github'
+Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
+Plug 'arcticicestudio/nord-vim'
